@@ -16,7 +16,6 @@ import {
 } from '../../utils';
 import Box, { BoxProps } from '../Box/Box';
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types';
-import Icon, { IconProps } from '../Icon/Icon';
 
 export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
@@ -41,8 +40,8 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   /** A radio item can appear disabled and be unable to change states. */
   disabled?: boolean;
 
-  /** The radio item indicator can be user-defined icon */
-  icon?: ShorthandValue<IconProps>;
+  /** The radio item indicator can be customized. */
+  indicator?: ShorthandValue<BoxProps>;
 
   /** The HTML input name. */
   name?: string;
@@ -84,7 +83,7 @@ class RadioGroupItem extends AutoControlledComponent<WithAsProp<RadioGroupItemPr
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthandWithoutJSX,
+    indicator: customPropTypes.shorthandAllowingChildren,
     label: customPropTypes.itemShorthand,
     name: PropTypes.string,
     onClick: PropTypes.func,
@@ -127,7 +126,7 @@ class RadioGroupItem extends AutoControlledComponent<WithAsProp<RadioGroupItemPr
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
-    const { label, icon } = this.props;
+    const { label, indicator } = this.props;
 
     return (
       <Ref innerRef={this.elementRef}>
@@ -139,10 +138,9 @@ class RadioGroupItem extends AutoControlledComponent<WithAsProp<RadioGroupItemPr
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {Icon.create(icon || 'icon-circle', {
+          {Box.create(indicator, {
             defaultProps: () => ({
-              size: 'small',
-              styles: styles.icon
+              styles: styles.indicator
             })
           })}
           {Box.create(label, {

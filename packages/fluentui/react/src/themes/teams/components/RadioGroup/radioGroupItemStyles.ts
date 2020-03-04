@@ -4,7 +4,6 @@ import { RadioGroupItemVariables } from './radioGroupItemVariables';
 import { pxToRem } from '../../../../utils';
 import Icon from '../../../../components/Icon/Icon';
 import getBorderFocusStyles from '../../getBorderFocusStyles';
-import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles';
 
 const restHoverFocusTextColor = textColor => ({
   color: textColor,
@@ -55,26 +54,50 @@ const radioStyles: ComponentSlotStylesPrepared<RadioGroupItemProps & RadioGroupI
     ...getBorderFocusStyles({ siteVariables })
   }),
 
-  icon: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    // overrides from icon styles
-    boxShadow: 'none',
-    margin: `0 ${pxToRem(12)} 0 0`,
+  indicator: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const commonIndicatorBeforeStyles = {
+      content: "' '",
+      display: 'block',
+      borderRadius: '50%',
+      width: pxToRem(12),
+      height: pxToRem(12)
+    };
 
-    ...getIconFillOrOutlineStyles({ outline: !p.checked }),
+    return {
+      margin: `0 ${pxToRem(12)} 0 0`,
 
-    ...(p.checked && {
-      color: v.iconBackgroundColorChecked
-    }),
+      ':before': {
+        ...commonIndicatorBeforeStyles,
+        backgroundColor: 'transparent',
+        border: `2px solid ${v.textColorDefault}`
+      },
 
-    ...(p.disabled && {
-      color: v.colorDisabled
-    }),
+      ...(p.checked &&
+        !p.disabled && {
+          ':before': {
+            ...commonIndicatorBeforeStyles,
+            backgroundColor: v.iconBackgroundColorChecked
+          }
+        }),
 
-    ...(p.checked &&
-      p.disabled && {
-        color: v.colorDisabled
+      ...(p.disabled && {
+        ...(!p.checked && {
+          ':before': {
+            ...commonIndicatorBeforeStyles,
+            backgroundColor: 'transparent',
+            border: `2px solid ${v.colorDisabled}`
+          }
+        }),
+
+        ...(p.checked && {
+          ':before': {
+            ...commonIndicatorBeforeStyles,
+            backgroundColor: v.colorDisabled
+          }
+        })
       })
-  })
+    };
+  }
 };
 
 export default radioStyles;
