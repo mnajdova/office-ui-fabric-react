@@ -104,41 +104,16 @@ export type FontFaces = FontFace[];
 // Icons
 // ========================================================
 
-type SvgIconFuncArg = {
-  classes: { [iconSlot: string]: string };
-  rtl: boolean;
-  props: any; // TODO IconProps
-};
-
-export type SvgIconSpec = ObjectOrFunc<any /* TODO React.ReactNode */, SvgIconFuncArg>;
 export type FontIconSpec = {
   content: string;
   fontFamily: string;
 };
 
 export type ThemeIconSpec = {
-  isSvg?: boolean;
-  icon: FontIconSpec | SvgIconSpec;
+  icon: FontIconSpec;
 };
 
-// Some components have hard coded icon names, such as the arrow icons for a submenu or dropdown chevron.
-// Different themes use different icon names.
-// Components which have hard dependencies on icon names use these `icon-*`.
-// A theme can map its icon names to these `icon-*` name in order to teach components to use their icons.
-// This allow theme switching to work with different icons.
-export type RequiredIconNames =
-  | 'icon-checkmark'
-  | 'icon-circle'
-  | 'icon-close'
-  | 'icon-arrow-end'
-  | 'icon-arrow-up'
-  | 'icon-arrow-down'
-  | 'icon-pause'
-  | 'icon-play'
-  | 'icon-chevron-start'
-  | 'icon-chevron-end';
-
-export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
+export type ThemeIcons = {
   [iconName: string]: ThemeIconSpec;
 };
 
