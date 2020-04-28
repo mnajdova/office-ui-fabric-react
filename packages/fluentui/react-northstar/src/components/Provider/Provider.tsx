@@ -87,6 +87,8 @@ const renderStaticStyles = (renderer: Renderer, theme: ThemeInput, siteVariables
   });
 };
 
+export const providerClassName = 'ui-provider';
+
 // Cache for which documents have registered which stylesheets.
 const docStyleMap = new WeakMap<Document, Map<string, boolean>>();
 
@@ -112,7 +114,6 @@ const defaultRegisterStyles = (stylesheet: string, target: Document) => {
  * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Fluent UI components.
  */
 const Provider: React.FC<WithAsProp<ProviderProps>> & {
-  className: string;
   Consumer: typeof ProviderConsumer;
   handledProps: (keyof ProviderProps)[];
 } = props => {
@@ -164,7 +165,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
   }
 
   const { classes } = unstable_getStyles({
-    className: Provider.className,
+    className: providerClassName,
     displayNames: [Provider.displayName],
     props: {
       className,
@@ -228,7 +229,6 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
   );
 };
 
-Provider.className = 'ui-provider';
 Provider.displayName = 'Provider';
 
 Provider.defaultProps = {
