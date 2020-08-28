@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "target": "es5",
+    "module": "commonjs",
+    "jsx": "react",
+    "declaration": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "noUnusedLocals": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "preserveConstEnums": true,
+    "lib": ["es5", "dom"],
+    "typeRoots": ["../../node_modules/@types", "../../typings"],
+    "types": ["jest", "webpack-env", "custom-global"],
+    "paths": {
+      "@fluentui/a11y-testing/lib/*": ["./src/*"],
+      "@fluentui/a11y-testing": ["./src"]
+    }
+  },
+  "include": ["src"]
+}
